@@ -6,16 +6,20 @@ import {
   Param,
   Post,
   Put,
+  Query,
 } from '@nestjs/common';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
+import { accessType } from 'src/types/types';
+import { UsersService } from './users.service';
 
 @Controller('users')
 export class UsersController {
-  //GET /users ==> []
+  //GET /users?access=admin ==> []
   @Get()
-  getUsers() {
-    return [];
+  getUsers(@Query('access') access: accessType) {
+    const service = new UsersService();
+    return service.getUsers(access);
   }
   //GET /users/:id ==> { ... }
   @Get(':id')
